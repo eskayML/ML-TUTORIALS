@@ -1,17 +1,23 @@
-import cv2
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-img = cv2.imread('beyonce.jpg')
-img = cv2.resize(img , (600,600))#resized image
-gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-faces = face_cascade.detectMultiScale(gray_img, scaleFactor = 1.05, minNeighbors = 5)
-print(type(faces))
-print(faces)
+import cv2;
 
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml');
 
-for (x,y,w,h) in faces:
-    img = cv2.rectangle(img, (x,y, (x+w,y+h), (0,255,0),3)
+video = cv2.VideoCapture(0);
 
-cv2.imshow('The Image with face detection', img)
-cv2.waitKey()
-cv2.destroyAllWindows()
-# print(cv2.data.haarcascades)
+while True:
+    check, frame = video.read();
+    faces = face_cascade.detectMultiScale(frame,
+                                          scaleFactor=1.1, minNeighbors=5);
+    for x,y,w,h in faces:
+        frame = cv2.rectangle(frame, (x,y), (x+w,y+h), (0,255,0), 3);
+
+    cv2.imshow('Face Detector', frame);
+
+    key = cv2.waitKey(1);
+#     destroys the opencv frame when the q button is pressed
+    if key == ord('q'):
+        break;
+
+video.release();
+cv2.destroyAllWindows();
+
