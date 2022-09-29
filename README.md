@@ -6,4 +6,3 @@ Contains scripts on:
 * Regression
 * Classification
 * Face detection
-And so on
